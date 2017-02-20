@@ -1,0 +1,77 @@
+
+
+2-19-17
+
+- develop error mechanism for matching/different passwords -- DONE
+- move logic from test.js to test_2.js
+- develop error mechanism for invalid user/password combination
+- provide index page
+- create catch-all URL for invalid path - redirect to index
+- beautify site
+- change .post blocks to 'newUserSubmit' rather than 'newUserPost', for example
+
+2-12-17
+
+Remaining Task - ensure that password matching logic is working properly. Details:
+
+---------------------------
+Checkpoint #1: Confirm the forms are working properly
+
+- confirm that new password, old password for /newPassword form are not equal
+- confirm that password, confirm password for /newUser form are equal
+
+If either occurs, prompt user with either of the below:
+
+'New Password cannot match Old Password'
+'Passwords do not match'
+
+Logic will be in .pug files
+---------------------------
+
+To do:
+
+1. Create pug files for rendering forms
+2. Change code to execute logic within POST request
+
+
+Checkpoint #1: Confirm the forms are working properly
+Checkpoint #2: Confirm logic in original application is working as intended
+
+
+2-02-17
+
+Once I have the below basic functions, I should have what I need for the most part.
+
+- review program to see what else the test does
+
+---------------------------
+- user authentication
+
+1. User submits username, password(unencrypted)
+2. Server checks for username existence, retrieves user salt
+3. Password is passed through encryption method along with salt retrieved in last step
+4. Encrypted password finds match in table of encrypted passwords, confirms for user
+
+---------------------------
+- change password (for existing user)
+
+1. User submits username, new password
+2. Salt is generated, and new password is encrypted
+3. Salt and encrypted new password overwrite current database record
+4. Success message is relayed to user
+
+---------------------------
+- user creation
+
+1. User submits a username and password
+2. Check to see whether user exists in database
+3  Create database record along with record ID
+4. Generate salt
+5. submitted password is run through encryption method using salt obtained previously
+6. Username, Password, salt logged in the database
+---------------------------
+- delete user
+
+- delete record that matches username and password
+
+---------------------------

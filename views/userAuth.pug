@@ -1,0 +1,20 @@
+-var error = message
+
+html
+  head
+    style.
+      body {font-family:arial} p {font-size:15px}
+  body
+    h3 User Authentication
+    form(action='/userAuthPost', method='post' enctype='multipart/form-data')
+      input(type='textfield', name='username', placeholder='User Name')
+      br
+      br
+      input(type='password', name='password', placeholder='Password')
+      br
+      br
+      input(type='submit', value='Submit')
+      br
+      br
+    p(style='color:red;')
+      i #{error}
