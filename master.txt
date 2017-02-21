@@ -1,10 +1,17 @@
+2-20-17
+
+Left to do:
+
+- provide index page -- DONE
+- create catch-all URL for invalid path - redirect to index -- DONE
+- beautify site -- DONE
 
 
 2-19-17
 
 - develop error mechanism for matching/different passwords -- DONE
-- move logic from test.js to test_2.js
-- develop error mechanism for invalid user/password combination
+- move logic from test.js to test_2.js -- DONE
+- develop error mechanism for invalid user/password combination --DONE
 - provide index page
 - create catch-all URL for invalid path - redirect to index
 - beautify site

@@ -14,6 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 app.set("views", "./views");
 app.set("view engine", "pug");
 
+app.get('/index', (req, res) => {
+    res.render('index')
+})
+
 app.get('/newuser', (req, res) => {
     res.render('newUser', {message:""});
 })
@@ -42,6 +46,7 @@ app.post('/newUserPost', upload.array(), (req, res) => {
         //generate salt
         var numberOfRounds = 10;
 	    var salt = bCrypt.genSaltSync(numberOfRounds);
+	    var password = req.body.password;
 	    
 	    //run salt and chosen password through hashing algoithm to encrypt password
 	    var encryptedPassword = bCrypt.hashSync(req.body.password, salt);
@@ -74,7 +79,13 @@ app.post('/newUserPost', upload.array(), (req, res) => {
                 			if (err) {
                 				console.log(err);
                 			}
-                			res.end('Thanks for your submission')
+                			var data = {
+                			    user:user,
+                			    salt:salt,
+                			    password:password,
+                			    encryptedPassword:encryptedPassword
+                			}
+                			res.render('newUserPost', {data:data});
                 		});
                 }
             })
@@ -108,7 +119,7 @@ app.post('/newPasswordPost', upload.array(), (req, res) => {
         	usersColl.find({user:user}).toArray(function(err, doc) {
         	    //if results are returned
         	    if (doc.length == 0) {
-        	        res.render('newPassword', {message:"Username or password not found"})
+        	        res.render('newPassword', {message:"*Username/password combination not found"})
         	    } else {
         	        salt = doc[0].salt;
         	    }
@@ -120,11 +131,21 @@ app.post('/newPasswordPost', upload.array(), (req, res) => {
         	    //query user with Old Password
         	    usersColl.find({user:user, password:oldEncryptedPassword}).toArray(function(err, doc) {
         	        if(doc.length == 0) {
-        	            res.render('newPassword', {message:"Username or password not found"});
+        	            res.render('newPassword', {message:"*Username/password combination not found"});
         	        } else {
+        	            //variables to pass to result page:
+  
+        	            var data = {
+        	                user:user,
+        	                salt:salt,
+        	                newPassword:newPassword,
+        	                oldPassword:oldPassword,
+        	                oldEncryptedPassword:oldEncryptedPassword,
+        	                newEncryptedPassword:newEncryptedPassword}
+        	                
         	            //insert into database
         	            usersColl.updateOne({user:user, password:oldEncryptedPassword}, {$set:{password:newEncryptedPassword}});
-        	            res.end('Password updated! Thanks for your submission.')
+        	            res.render('newPasswordPost', {data:data});
         	        }
         	    });
         	});
@@ -152,7 +173,7 @@ app.post('/userAuthPost', upload.array(), (req, res) => {
         	    
         	    //if results are returned
         	    if (doc.length == 0) {
-    	            res.render('userAuth', {message:"*Username or password not found"});
+    	            res.render('userAuth', {message:"*Username/password combination not found"});
         	    } else {
         	        //first get user and salt
             	    salt = doc[0].salt;
@@ -163,14 +184,21 @@ app.post('/userAuthPost', upload.array(), (req, res) => {
             	    usersColl.find({user:user, password:encryptedPassword}).toArray(function(err, doc) {
             	        
             	        if (doc.length == 0) {
-        	            res.render('userAuth', {message:"*Username or password not found"});
+        	            res.render('userAuth', {message:"*Username/password combination not found"});
             	        } else {
             	            //check returned document
                 	        console.log(doc[0]);
                 	        //close database connection
                     		db.close();
+                    		//variables to pass to .pug file
+                    		var data = {
+                			    user:user,
+                			    salt:salt,
+                			    password:password,
+                			    encryptedPassword:encryptedPassword
+                			}
                     		//send response
-                    		res.end('Thanks for your submission');
+                    		res.render('userAuthPost', {data:data});
             	        }
             	    });
         	    }
@@ -179,5 +207,9 @@ app.post('/userAuthPost', upload.array(), (req, res) => {
     }
 })
 
+//generic catch all
+app.get('/*', (req, res) => {
+    res.redirect('index');
+})
 
 app.listen(8080);

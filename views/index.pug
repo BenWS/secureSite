@@ -1,0 +1,22 @@
+html
+  head
+    style.
+      body {font-family:arial} p {font-size:15px}
+  body
+    h3(style="color:#0967a5") Secure Password Storage Demo
+    p
+      | Welcome. This website is a demonstration of password encryption and storage. There are three modules: user creation, user authentication, and password modification. In each all of these cases, the provided password is passed through an encryption algorithm in combination with a cryptographic 'salt'.
+    p
+      | What is a salt? In simple terms, it's a string of randomly generated characters. Having a salt is an added precaution in the event that any unwanted person gained access to a table of encrypted user passwords. One common tool password theives may use is a pre-generated list mapping encrypted strings to their unencrypted counterparts. Combining a salt with a common password in effect makes the password uncommon, and unlikely for anyone to find in a pre-generated list.
+    p
+      | This website is heavily inspired by 
+      a(href='http://www.appstoremarketresearch.com/articles/node-js-tutorial-authentication-crypto-bcrypt/#localVsRemote') this
+      |  piece of writing and its own demonstration module.
+    p Site pages:
+    ul
+      li
+        a(href='/newUser') User Creation
+      li
+        a(href='/userAuthentication') User Authentication
+      li
+        a(href='/newPassword') Password Modification

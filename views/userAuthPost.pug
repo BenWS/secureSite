@@ -1,0 +1,26 @@
+-var user = data.user
+-var salt = data.salt
+-var password = data.password
+-var encryptedPassword = data.encryptedPassword
+
+html
+  head
+    style.
+        body {font-family:arial} p {font-size:15px}
+  body
+    h3(style="color:#f44263") User Authenticated
+    p
+      | - Found username #[i #{user}] in database.
+      br
+      | - Retrieved salt #[i #{salt}] from database record.
+      br
+      | - Provided password #[i #{password}] combined with salt in encryption algorithm to produce encrypted password: 
+      br
+      br
+      |     #[i #{encryptedPassword}]
+      br
+      br
+      | - Checked if username and encrypted password exist together in database - success!
+      br
+      br
+      | Click #[a(href='/index') here] to return to index. 

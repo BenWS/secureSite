@@ -1,0 +1,24 @@
+-var user = data.user
+-var salt = data.salt
+-var password = data.password
+-var encryptedPassword = data.encryptedPassword
+
+html
+  head
+    style.
+      body {font-family:arial} p {font-size:15px}
+  body
+    h3(style="color:#f44263") Success - new user created!
+    p
+      | - New user #[i #{user}] created.
+      br
+      | - Password #[i #{password}] combined with salt #[i #{salt}] in encryption algorithm to produce encrypted password 
+      br
+      br
+      |     #[i #{encryptedPassword}]
+      br
+      br
+      | - Salt, encrypted password, and username stored in database for future use.
+      br
+      br
+      | Click #[a(href='/index') here] to return to index. 
