@@ -52,7 +52,7 @@ app.post('/newUserPost', upload.array(), (req, res) => {
 	    var encryptedPassword = bCrypt.hashSync(req.body.password, salt);
 	    
 	    //database connection
-	    mongo.connect('mongodb://heroku_sv3gzsts:ghanjlbubvodkmbra92slljng9@ds041536.mlab.com:41536/heroku_sv3gzsts', function (err, db) {
+	    mongo.connect(process.env.MONGODB_URI, function (err, db) {
 	        
 	        //check to see if database returns error
 	        if(err) {
@@ -105,7 +105,7 @@ app.post('/newPasswordPost', upload.array(), (req, res) => {
     } else if (req.body.newPassword === req.body.oldPassword) {
         res.render('newPassword', {message:"*New password cannot match old - please resubmit"})
     } else {
-        mongo.connect('mongodb://heroku_sv3gzsts:ghanjlbubvodkmbra92slljng9@ds041536.mlab.com:41536/heroku_sv3gzsts', function (err, db) {
+        mongo.connect(process.env.MONGODB_URI, function (err, db) {
             //declare database we're connecting to
         	var usersColl = db.collection('users');
         	var salt;
@@ -160,7 +160,7 @@ app.post('/userAuthPost', upload.array(), (req, res) => {
     if(req.body.username === "" || req.body.password === "") {
         res.render('userAuth',  {message:"*Please submit data for all fields"});
     } else {
-        mongo.connect('mongodb://heroku_sv3gzsts:ghanjlbubvodkmbra92slljng9@ds041536.mlab.com:41536/heroku_sv3gzsts', function (err, db) {
+        mongo.connect(process.env.MONGODB_URI, function (err, db) {
             //declare database we're connecting to
         	var usersColl = db.collection('users');
         	var salt;
