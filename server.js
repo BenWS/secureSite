@@ -105,7 +105,7 @@ app.post('/newPasswordPost', upload.array(), (req, res) => {
     } else if (req.body.newPassword === req.body.oldPassword) {
         res.render('newPassword', {message:"*New password cannot match old - please resubmit"})
     } else {
-        mongo.connect(process.env.'mongodb://heroku_lgzd4rgx:qfvq0dr6p4546g8ql0s35l1bq9@ds157390.mlab.com:57390/heroku_lgzd4rgx', function (err, db) {
+        mongo.connect('mongodb://heroku_lgzd4rgx:qfvq0dr6p4546g8ql0s35l1bq9@ds157390.mlab.com:57390/heroku_lgzd4rgx', function (err, db) {
             //declare database we're connecting to
         	var usersColl = db.collection('users');
         	var salt;
@@ -160,7 +160,7 @@ app.post('/userAuthPost', upload.array(), (req, res) => {
     if(req.body.username === "" || req.body.password === "") {
         res.render('userAuth',  {message:"*Please submit data for all fields"});
     } else {
-        mongo.connect(process.env.'mongodb://heroku_lgzd4rgx:qfvq0dr6p4546g8ql0s35l1bq9@ds157390.mlab.com:57390/heroku_lgzd4rgx', function (err, db) {
+        mongo.connect('mongodb://heroku_lgzd4rgx:qfvq0dr6p4546g8ql0s35l1bq9@ds157390.mlab.com:57390/heroku_lgzd4rgx', function (err, db) {
             //declare database we're connecting to
         	var usersColl = db.collection('users');
         	var salt;
